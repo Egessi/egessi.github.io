@@ -342,13 +342,17 @@
 
 <script>
 (function() {
-  var params = new URLSearchParams(location.search);
-  var code = params.get('c');
+  // Read code from hash (#code) first — new format avoids WhatsApp = truncation
+  // Fall back to query param (?c=code) for old shared links
+  var code = location.hash.slice(1) || new URLSearchParams(location.search).get('c');
   if (!code) return;
 
+  // Decode level name for display (URL-safe base64 → standard base64)
   var name = 'CUSTOM LEVEL';
   try {
-    var d = JSON.parse(atob(code));
+    var b64 = code.replace(/-/g, '+').replace(/_/g, '/');
+    while (b64.length % 4) b64 += '=';
+    var d = JSON.parse(decodeURIComponent(escape(atob(b64))));
     name = (d.mechName || d.name || 'CUSTOM LEVEL').toUpperCase();
   } catch(e) {}
 
@@ -359,7 +363,8 @@
   ls.textContent = 'TAP TO PLAY THIS LEVEL';
   ls.style.display = '';
 
-  var deepLink = 'balltempo://play?c=' + encodeURIComponent(code);
+  // Deep link — pass code as-is (already URL-safe base64, no extra encoding needed)
+  var deepLink = 'balltempo://play?c=' + code;
   var btn = document.getElementById('openBtn');
   btn.href = deepLink;
   document.getElementById('btnLabel').textContent = 'OPEN IN BALLTEMPO';
