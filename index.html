@@ -4,128 +4,271 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BallTempo — Play Level</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
-    background: #18191f;
+    background: #0f1016;
     color: #e2e8f0;
     font-family: 'Space Mono', 'Courier New', monospace;
     min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 24px;
+    padding: 32px 24px;
+    overflow: hidden;
+    position: relative;
   }
+
+  /* Atmospheric background */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 60% 50% at 50% 0%, rgba(56,189,248,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 40% 40% at 80% 80%, rgba(99,102,241,0.06) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  /* Subtle grid */
+  body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(56,189,248,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(56,189,248,0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    pointer-events: none;
+  }
+
   .card {
-    max-width: 360px;
+    position: relative;
+    z-index: 1;
+    max-width: 380px;
     width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
   }
-  .logo {
-    font-size: 13px;
-    letter-spacing: 6px;
-    color: #38bdf8;
-    font-weight: 700;
-    margin-bottom: 8px;
-  }
-  .subtitle {
-    font-size: 11px;
-    letter-spacing: 3px;
-    color: #334155;
+
+  /* Logo */
+  .logo-wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     margin-bottom: 48px;
   }
-  .ball {
-    width: 72px; height: 72px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #93c5fd, #38bdf8 40%, #0369a1);
-    box-shadow: 0 0 40px rgba(56,189,248,0.4);
-    margin: 0 auto 32px;
-    animation: pulse 2s ease-in-out infinite;
-  }
-  @keyframes pulse {
-    0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(56,189,248,0.4); }
-    50% { transform: scale(1.06); box-shadow: 0 0 60px rgba(56,189,248,0.6); }
-  }
-  .level-name {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    color: #f1f5f9;
-    margin-bottom: 8px;
-  }
-  .opening {
+  .logo {
     font-size: 11px;
-    letter-spacing: 2px;
-    color: #64748b;
+    letter-spacing: 8px;
+    color: #38bdf8;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .tagline {
+    font-size: 9px;
+    letter-spacing: 4px;
+    color: #1e3a4a;
+  }
+
+  /* Ball */
+  .ball-wrap {
+    position: relative;
     margin-bottom: 40px;
   }
-  .btn {
-    display: block;
-    width: 100%;
-    padding: 18px;
-    border-radius: 16px;
-    font-size: 13px;
+  .ball-glow {
+    position: absolute;
+    inset: -24px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,189,248,0.2) 0%, transparent 70%);
+    animation: glowPulse 2.4s ease-in-out infinite;
+  }
+  .ball {
+    width: 80px; height: 80px;
+    border-radius: 50%;
+    background: radial-gradient(circle at 32% 28%, #bae6fd, #38bdf8 38%, #0369a1 68%, #071929 100%);
+    box-shadow:
+      0 0 0 1px rgba(56,189,248,0.2),
+      0 8px 32px rgba(56,189,248,0.3),
+      inset 0 1px 0 rgba(255,255,255,0.3);
+    position: relative;
+    animation: ballFloat 3s ease-in-out infinite;
+  }
+  @keyframes ballFloat {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-8px); }
+  }
+  @keyframes glowPulse {
+    0%, 100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.15); }
+  }
+
+  /* Level info */
+  .level-name {
+    font-size: 22px;
     font-weight: 700;
     letter-spacing: 3px;
-    cursor: pointer;
-    text-decoration: none;
-    transition: opacity 0.15s;
-    margin-bottom: 12px;
+    color: #f1f5f9;
+    text-align: center;
+    margin-bottom: 6px;
+    text-shadow: 0 0 30px rgba(56,189,248,0.3);
   }
-  .btn:active { opacity: 0.7; }
-  .btn-primary {
-    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
-    color: #fff;
-    box-shadow: 0 8px 32px rgba(56,189,248,0.35);
+  .level-sub {
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: #334155;
+    margin-bottom: 40px;
+    text-align: center;
   }
-  .btn-secondary {
-    background: rgba(255,255,255,0.05);
-    color: #64748b;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  .store-links {
-    display: flex;
-    gap: 12px;
-    margin-top: 24px;
-  }
-  .store-links a {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid rgba(255,255,255,0.08);
-    color: #64748b;
-    font-size: 10px;
-    letter-spacing: 2px;
-    text-decoration: none;
+
+  /* Main CTA */
+  .btn-open {
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 10px;
+    width: 100%;
+    padding: 20px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, #38bdf8, #0ea5e9);
+    color: #fff;
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 3px;
+    text-decoration: none;
+    box-shadow:
+      0 8px 32px rgba(56,189,248,0.35),
+      0 2px 8px rgba(0,0,0,0.4),
+      inset 0 1px 0 rgba(255,255,255,0.2);
+    transition: transform 0.15s, box-shadow 0.15s;
+    margin-bottom: 40px;
+    position: relative;
+    overflow: hidden;
   }
-  .hint {
+  .btn-open::after {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 60%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+    animation: shimmer 2.5s ease-in-out infinite;
+  }
+  @keyframes shimmer {
+    0% { left: -100%; }
+    60%, 100% { left: 140%; }
+  }
+  .btn-open:active { transform: scale(0.97); }
+
+  .btn-play-icon {
+    width: 22px; height: 22px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
     font-size: 10px;
-    color: #334155;
-    letter-spacing: 1px;
-    margin-top: 16px;
-    line-height: 1.6;
   }
+
+  /* Hint text */
+  .hint {
+    font-size: 9px;
+    color: #1e3a4a;
+    letter-spacing: 1.5px;
+    text-align: center;
+    line-height: 1.8;
+    margin-top: -30px;
+    margin-bottom: 40px;
+    transition: color 0.5s;
+  }
+  .hint.visible { color: #475569; }
+
+  /* Divider */
+  .divider {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(255,255,255,0.06);
+  }
+  .divider-text {
+    font-size: 8px;
+    letter-spacing: 2px;
+    color: #1e3a4a;
+  }
+
+  /* Store links */
+  .store-links {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+  }
+  .store-link {
+    flex: 1;
+    padding: 14px 10px;
+    border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+    color: #334155;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .store-link:hover { border-color: rgba(56,189,248,0.2); color: #64748b; }
+  .store-link svg { opacity: 0.4; }
 </style>
 </head>
 <body>
 <div class="card">
-  <div class="logo">BALLTEMPO</div>
-  <div class="subtitle">ONE TAP TIMING</div>
-  <div class="ball"></div>
-  <div class="level-name" id="levelName">CUSTOM LEVEL</div>
-  <div class="opening" id="openingMsg">Opening in BallTempo...</div>
+  <div class="logo-wrap">
+    <div class="logo">BALLTEMPO</div>
+    <div class="tagline">ONE TAP TIMING</div>
+  </div>
 
-  <a class="btn btn-primary" id="openBtn" href="#">▶ OPEN IN BALLTEMPO</a>
+  <div class="ball-wrap">
+    <div class="ball-glow"></div>
+    <div class="ball"></div>
+  </div>
+
+  <div class="level-name" id="levelName">CUSTOM LEVEL</div>
+  <div class="level-sub" id="levelSub">LOADING...</div>
+
+  <a class="btn-open" id="openBtn" href="#">
+    <div class="btn-play-icon">▶</div>
+    <span id="btnLabel">OPEN IN BALLTEMPO</span>
+  </a>
   <div class="hint" id="hintMsg"></div>
 
+  <div class="divider">
+    <div class="divider-line"></div>
+    <div class="divider-text">DON'T HAVE THE APP?</div>
+    <div class="divider-line"></div>
+  </div>
+
   <div class="store-links">
-    <a href="https://apps.apple.com/app/balltempo/id6744922635">📱 App Store</a>
-    <a href="https://play.google.com/store/apps/details?id=com.meghassoft.balltempo">🤖 Google Play</a>
+    <a class="store-link" href="https://apps.apple.com/app/balltempo/id6744922635">
+      <svg width="18" height="18" viewBox="0 0 814 1000" fill="#64748b"><path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-47.4-148.2-108.8c-49.5-71.4-91.7-181.1-91.7-285.5 0-181 118.1-277 233.9-277 63.6 0 116.2 42.8 155.8 42.8 37.8 0 96.7-44.3 165.6-44.3 26.6 0 108.2 2.6 162.3 100.3zm-219.1-172.3c30.7-36.4 52.5-87.9 52.5-139.3 0-7.1-.6-14.3-1.9-20.1-49.9 1.9-109 33.5-145 70.5-28.8 32.3-55.2 83.9-55.2 136.3 0 7.8 1.3 15.7 1.9 18.3 3.2.6 8.4 1.3 13.6 1.3 44.9 0 101.5-29.4 134.1-66.9z"/></svg>
+      APP STORE
+    </a>
+    <a class="store-link" href="https://play.google.com/store/apps/details?id=com.meghassoft.balltempo">
+      <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#4CAF50" d="M4.5 6.4L26 24 4.5 41.6A2 2 0 0 1 4 40V8a2 2 0 0 1 .5-1.6z" opacity=".6"/><path fill="#FF3D00" d="M34 24l6.5 3.8-8 4.6L26 24l6.5-8.4 8 4.6L34 24z" opacity=".6"/><path fill="#FFD600" d="M4.5 41.6L26 24l6.5 8.4-22.8 13.1a2 2 0 0 1-5.2-3.9z" opacity=".6"/><path fill="#2196F3" d="M4.5 6.4l22.8 13L26 24 4.5 6.4z" opacity=".6"/></svg>
+      GOOGLE PLAY
+    </a>
   </div>
 </div>
 
@@ -133,45 +276,35 @@
 (function() {
   var params = new URLSearchParams(location.search);
   var code = params.get('c');
-  var name = params.get('n');
 
   if (!code) {
     document.getElementById('levelName').textContent = 'BALLTEMPO';
-    document.getElementById('openingMsg').textContent = 'One Tap Timing Game';
+    document.getElementById('levelSub').textContent = 'ONE TAP TIMING GAME';
     document.getElementById('openBtn').href = 'https://apps.apple.com/app/balltempo/id6744922635';
-    document.getElementById('openBtn').textContent = '▶ GET THE APP';
+    document.getElementById('btnLabel').textContent = 'GET THE APP';
     return;
   }
 
-  // Try to decode level name from code if not passed separately
-  if (!name) {
-    try {
-      var decoded = JSON.parse(atob(code));
-      name = decoded.mechName || decoded.name || 'CUSTOM LEVEL';
-    } catch(e) { name = 'CUSTOM LEVEL'; }
-  }
+  var name = 'CUSTOM LEVEL';
+  try {
+    var decoded = JSON.parse(atob(code));
+    name = (decoded.mechName || decoded.name || 'CUSTOM LEVEL').toUpperCase();
+  } catch(e) {}
 
-  document.getElementById('levelName').textContent = name.toUpperCase();
+  document.getElementById('levelName').textContent = name;
+  document.getElementById('levelSub').textContent = 'TAP TO PLAY THIS LEVEL';
 
   var deepLink = 'balltempo://play?c=' + encodeURIComponent(code);
   document.getElementById('openBtn').href = deepLink;
 
-  // Auto-open the app
-  var opened = false;
-  function tryOpen() {
-    if (opened) return;
-    opened = true;
+  setTimeout(function() {
     window.location.href = deepLink;
-    // After a moment, if still on page, show install prompt
     setTimeout(function() {
-      document.getElementById('openingMsg').textContent = 'Not installed? Get BallTempo below.';
-      document.getElementById('hintMsg').textContent =
-        'If the app did not open, install BallTempo first — the level code is saved for you.';
+      var hint = document.getElementById('hintMsg');
+      hint.textContent = 'App not opening? Install BallTempo first — then come back to this link.';
+      hint.classList.add('visible');
     }, 2500);
-  }
-
-  // Delay auto-open slightly so page renders first
-  setTimeout(tryOpen, 600);
+  }, 600);
 })();
 </script>
 </body>
