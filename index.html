@@ -286,8 +286,8 @@
     </div>
   </div>
 
-  <div class="level-name" id="levelName">BALLTEMPO</div>
-  <div class="level-sub"  id="levelSub">ONE TAP TIMING GAME</div>
+  <div class="level-name" id="levelName" style="display:none"></div>
+  <div class="level-sub"  id="levelSub" style="display:none"></div>
 
   <!-- CTA -->
   <a class="btn-open" id="openBtn" href="#">
@@ -352,8 +352,12 @@
     name = (d.mechName || d.name || 'CUSTOM LEVEL').toUpperCase();
   } catch(e) {}
 
-  document.getElementById('levelName').textContent = name;
-  document.getElementById('levelSub').textContent = 'TAP TO PLAY THIS LEVEL';
+  var ln = document.getElementById('levelName');
+  var ls = document.getElementById('levelSub');
+  ln.textContent = name;
+  ln.style.display = '';
+  ls.textContent = 'TAP TO PLAY THIS LEVEL';
+  ls.style.display = '';
 
   var deepLink = 'balltempo://play?c=' + encodeURIComponent(code);
   var btn = document.getElementById('openBtn');
