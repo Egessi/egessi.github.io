@@ -1,0 +1,15 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["88972GN5N8.com.meghassoft.balltempo"],
+        "components": [
+          {
+            "?": { "c": "*" },
+            "/": "/"
+          }
+        ]
+      }
+    ]
+  }
+}
