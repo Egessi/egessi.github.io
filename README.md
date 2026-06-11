@@ -85,7 +85,6 @@ BallTempo is built with:
 
 - **PixiJS** — WebGL rendering
 - **Capacitor** — native iOS & Android wrapper
-- **Firebase** — auth, cloud saves, community levels
 - **Web Audio API** — adaptive background music
 
 The game runs as a web app wrapped in a native shell — one codebase, two platforms.
