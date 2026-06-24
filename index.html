@@ -2,381 +2,422 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BallTempo — Play Level</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>BallTempo — One Tap Timing</title>
+<meta name="description" content="Master 50 levels of precision timing. One tap. Can you reach Legend rank?">
+<meta property="og:title" content="BallTempo — One Tap Timing">
+<meta property="og:description" content="50 levels. 30 mechanics. Can you reach Legend?">
+<meta name="theme-color" content="#0d1117">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#0d1117;--cyan:#38bdf8;--red:#f87171;--purple:#a78bfa;
+  --text:#e2e8f0;--muted:#64748b;--border:rgba(56,189,248,0.12);
+}
+html{scroll-behavior:smooth;}
+body{
+  min-height:100dvh;background:var(--bg);color:var(--text);
+  font-family:'Space Mono',monospace;overflow-x:hidden;
+}
 
-  body {
-    background: #0d0e14;
-    color: #e2e8f0;
-    font-family: 'Space Mono', monospace;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 40px 24px;
-    position: relative;
-    overflow: hidden;
-  }
+/* Grid background */
+body::before{
+  content:'';position:fixed;inset:0;z-index:0;
+  background-image:
+    linear-gradient(rgba(56,189,248,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,0.025) 1px,transparent 1px);
+  background-size:44px 44px;pointer-events:none;
+}
 
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(56,189,248,0.025) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(56,189,248,0.025) 1px, transparent 1px);
-    background-size: 44px 44px;
-    pointer-events: none;
-  }
+/* ── NAV ── */
+nav{
+  position:relative;z-index:10;
+  padding:18px 24px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.nav-logo{display:flex;align-items:center;gap:12px;}
+.nav-arena{
+  width:46px;height:32px;position:relative;
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+}
+.nav-wall{
+  width:2.5px;height:26px;border-radius:2px;
+  background:linear-gradient(to bottom,transparent,var(--cyan) 25%,var(--cyan) 75%,transparent);
+  box-shadow:0 0 7px rgba(56,189,248,0.7);
+}
+.nav-ball{
+  width:16px;height:16px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#bae6fd,var(--cyan) 40%,#0369a1 72%,#071929 100%);
+  box-shadow:0 0 10px rgba(56,189,248,0.8),inset 0 1px 0 rgba(255,255,255,0.4);
+  position:absolute;left:50%;top:50%;
+  animation:navBall 1.6s ease-in-out infinite;
+}
+@keyframes navBall{
+  0%,100%{transform:translate(calc(-50% - 8px),-50%)}
+  50%{transform:translate(calc(-50% + 8px),-50%)}
+}
+.nav-brand{
+  font-family:'Rajdhani',sans-serif;
+  font-size:20px;font-weight:700;letter-spacing:2px;color:var(--text);
+}
+.nav-brand span{color:var(--cyan);}
+.nav-badge{
+  font-size:8px;letter-spacing:2px;color:var(--muted);
+  border:1px solid var(--border);border-radius:6px;padding:4px 8px;
+}
 
-  body::after {
-    content: '';
-    position: fixed;
-    top: -20%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 600px;
-    height: 400px;
-    background: radial-gradient(ellipse, rgba(56,189,248,0.07) 0%, transparent 70%);
-    pointer-events: none;
-  }
+/* ── HERO ── */
+.hero{
+  position:relative;z-index:1;
+  min-height:calc(100dvh - 68px);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:20px 28px 48px;text-align:center;
+}
 
-  .card {
-    position: relative;
-    z-index: 1;
-    max-width: 400px;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
+/* Radial glow */
+.hero::before{
+  content:'';
+  position:absolute;top:-15%;left:50%;transform:translateX(-50%);
+  width:min(700px,130vw);height:70%;
+  background:radial-gradient(ellipse,rgba(56,189,248,0.12) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
 
-  /* ── Logo ── */
-  .logo-area {
-    display: flex;
-    align-items: center;
-    gap: 18px;
-    margin-bottom: 48px;
-    padding: 20px 28px;
-    background: linear-gradient(135deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
-    border: 1px solid rgba(56,189,248,0.14);
-    border-radius: 20px;
-    width: 100%;
-    box-shadow: 0 0 40px rgba(56,189,248,0.06), inset 0 1px 0 rgba(255,255,255,0.04);
-  }
+/* Skull */
+.skull-wrap{position:relative;z-index:1;margin-bottom:28px;}
+.skull-svg{
+  width:clamp(140px,38vw,200px);height:auto;display:block;margin:0 auto;
+  filter:drop-shadow(0 0 18px rgba(56,189,248,0.6)) drop-shadow(0 0 40px rgba(56,189,248,0.2));
+  animation:skullPulse 3s ease-in-out infinite;
+}
+@keyframes skullPulse{
+  0%,100%{filter:drop-shadow(0 0 18px rgba(56,189,248,0.55)) drop-shadow(0 0 40px rgba(56,189,248,0.2));}
+  50%{filter:drop-shadow(0 0 28px rgba(56,189,248,0.75)) drop-shadow(0 0 60px rgba(56,189,248,0.3)) drop-shadow(0 0 80px rgba(248,113,113,0.12));}
+}
 
-  .arena {
-    display: flex;
-    align-items: center;
-    gap: 0;
-    flex-shrink: 0;
-    width: 64px;
-    justify-content: space-between;
-    position: relative;
-  }
-  .wall {
-    width: 3px;
-    height: 46px;
-    border-radius: 2px;
-    background: linear-gradient(to bottom, transparent, #38bdf8 25%, #38bdf8 75%, transparent);
-    box-shadow: 0 0 8px rgba(56,189,248,0.7), 0 0 20px rgba(56,189,248,0.25);
-    flex-shrink: 0;
-  }
-  .arena-ball {
-    width: 26px;
-    height: 26px;
-    border-radius: 50%;
-    background: radial-gradient(circle at 35% 30%, #bae6fd, #38bdf8 40%, #0369a1 72%, #071929 100%);
-    box-shadow: 0 0 12px rgba(56,189,248,0.8), 0 0 28px rgba(56,189,248,0.3), inset 0 1px 0 rgba(255,255,255,0.45);
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    animation: arenaSlide 1.6s ease-in-out infinite;
-  }
-  @keyframes arenaSlide {
-    0%   { transform: translate(calc(-50% - 12px), -50%); }
-    50%  { transform: translate(calc(-50% + 12px), -50%); }
-    100% { transform: translate(calc(-50% - 12px), -50%); }
-  }
+/* Title */
+.game-title{
+  position:relative;z-index:1;
+  font-family:'Rajdhani',sans-serif;
+  font-size:clamp(48px,13vw,80px);
+  font-weight:700;letter-spacing:4px;line-height:1;
+  background:linear-gradient(135deg,#f1f5f9 0%,var(--cyan) 48%,var(--purple) 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:6px;
+}
+.level-name-hero{
+  position:relative;z-index:1;
+  font-size:clamp(22px,7vw,40px);font-weight:700;letter-spacing:3px;
+  color:var(--text);text-shadow:0 0 28px rgba(56,189,248,0.3);
+  margin-bottom:6px;display:none;
+}
+.tagline{
+  position:relative;z-index:1;
+  font-size:10px;letter-spacing:6px;color:var(--cyan);
+  margin-bottom:14px;
+}
+.desc{
+  position:relative;z-index:1;
+  font-size:13px;line-height:1.8;color:var(--muted);
+  max-width:280px;margin-bottom:36px;
+}
 
-  .brand {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-  }
-  .brand-name {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 30px;
-    font-weight: 700;
-    letter-spacing: 2px;
-    line-height: 1;
-  }
-  .brand-name .b1 { color: #f1f5f9; }
-  .brand-name .b2 { color: #38bdf8; }
-  .brand-sub {
-    font-size: 8px;
-    letter-spacing: 4px;
-    color: #2d4a5a;
-    padding-left: 1px;
-  }
+/* Primary CTA */
+.btn-primary{
+  position:relative;z-index:1;
+  display:flex;align-items:center;justify-content:center;gap:12px;
+  width:100%;max-width:320px;
+  padding:18px 28px;border-radius:16px;
+  background:linear-gradient(135deg,var(--cyan),#0ea5e9 55%,#0284c7);
+  color:#fff;font-family:'Space Mono',monospace;
+  font-size:12px;font-weight:700;letter-spacing:3px;
+  text-decoration:none;
+  box-shadow:0 8px 28px rgba(56,189,248,0.4),0 2px 8px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.2);
+  overflow:hidden;transition:transform 0.15s,box-shadow 0.15s;
+  margin-bottom:14px;
+}
+.btn-primary::after{
+  content:'';position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent);
+  animation:shimmer 2.8s ease-in-out infinite;
+}
+@keyframes shimmer{0%{left:-80%}60%,100%{left:140%}}
+.btn-primary:active{transform:scale(0.97);}
+.play-icon{
+  width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.2);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.play-icon svg{display:block;width:10px;height:11px;margin-left:2px;}
 
-  /* ── Level info ── */
-  .level-name {
-    font-size: 20px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    color: #f1f5f9;
-    text-align: center;
-    margin-bottom: 6px;
-    text-shadow: 0 0 24px rgba(56,189,248,0.25);
-  }
-  .level-sub {
-    font-size: 9px;
-    letter-spacing: 3px;
-    color: #334155;
-    margin-bottom: 32px;
-    text-align: center;
-  }
+.hint{
+  position:relative;z-index:1;
+  font-size:9px;color:transparent;letter-spacing:1px;
+  text-align:center;line-height:1.8;margin-bottom:20px;min-height:28px;
+  transition:color 0.5s;max-width:300px;
+}
+.hint.show{color:var(--muted);}
 
-  /* ── CTA ── */
-  .btn-open {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 14px;
-    width: 100%;
-    padding: 19px 24px;
-    border-radius: 16px;
-    background: linear-gradient(135deg, #38bdf8, #0ea5e9 55%, #0284c7);
-    color: #fff;
-    font-family: 'Space Mono', monospace;
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 3px;
-    text-decoration: none;
-    box-shadow: 0 8px 28px rgba(56,189,248,0.38), 0 2px 8px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.25);
-    margin-bottom: 12px;
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.15s, box-shadow 0.15s;
-  }
-  .btn-open::after {
-    content: '';
-    position: absolute;
-    top: 0; left: -80%;
-    width: 50%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
-    animation: shimmer 2.8s ease-in-out infinite;
-  }
-  @keyframes shimmer { 0%{left:-80%} 60%,100%{left:140%} }
-  .btn-open:active { transform: scale(0.97); }
+/* Store badges in hero */
+.hero-store{position:relative;z-index:1;width:100%;max-width:320px;}
+.store-label{font-size:8px;letter-spacing:2px;color:#2d4a5a;margin-bottom:10px;text-align:center;}
+.store-links{display:flex;gap:10px;}
+.store-link{
+  flex:1;padding:12px 14px;border-radius:14px;
+  text-decoration:none;display:flex;align-items:center;gap:10px;
+  transition:transform 0.15s;
+}
+.store-link:active{transform:scale(0.96);}
+.store-apple{background:#1a1a1a;border:1px solid #2a2a2a;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.store-google{background:#1c2333;border:1px solid rgba(66,133,244,0.25);box-shadow:0 4px 16px rgba(66,133,244,0.1);}
+.s-icon{flex-shrink:0;display:flex;align-items:center;}
+.s-apple-icon{fill:#fff;}
+.s-text{display:flex;flex-direction:column;gap:1px;}
+.s-sub{font-size:7px;letter-spacing:1px;line-height:1;font-family:'Space Mono',monospace;}
+.s-label{font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;letter-spacing:0.5px;line-height:1.1;}
+.store-apple .s-label{color:#fff;}.store-apple .s-sub{color:#666;}
+.store-google .s-label{color:#e8f0fe;}.store-google .s-sub{color:#5f7a9f;}
 
-  /* play icon — properly centered triangle */
-  .play-icon {
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.2);
-    flex-shrink: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .play-icon svg {
-    display: block;
-    width: 11px;
-    height: 12px;
-    margin-left: 2px; /* optical centering for triangle */
-  }
+/* ── FEATURES (landing mode only) ── */
+.features{
+  position:relative;z-index:1;
+  padding:40px 24px;
+  border-top:1px solid rgba(255,255,255,0.05);
+}
+.feat-label{
+  text-align:center;font-size:8px;letter-spacing:4px;
+  color:var(--muted);margin-bottom:24px;
+}
+.feat-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+  max-width:480px;margin:0 auto;
+}
+.feat-card{
+  background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
+  border:1px solid var(--border);border-radius:14px;
+  padding:18px 10px;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+}
+.feat-icon{display:flex;align-items:center;justify-content:center;height:40px;}
+.feat-ball-arena{
+  width:42px;height:28px;position:relative;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.feat-wall{
+  width:2px;height:22px;border-radius:1px;
+  background:linear-gradient(to bottom,transparent,var(--cyan) 25%,var(--cyan) 75%,transparent);
+}
+.feat-ball{
+  width:12px;height:12px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#bae6fd,var(--cyan) 45%,#0369a1 100%);
+  box-shadow:0 0 6px rgba(56,189,248,0.7);
+  position:absolute;left:50%;top:50%;
+  animation:featBall 1.9s ease-in-out infinite;
+}
+@keyframes featBall{
+  0%,100%{transform:translate(calc(-50% - 6px),-50%)}
+  50%{transform:translate(calc(-50% + 6px),-50%)}
+}
+.feat-skull-svg{
+  width:32px;height:auto;
+  filter:drop-shadow(0 0 5px rgba(248,113,113,0.45));
+}
+.feat-star{
+  font-size:26px;color:#fbbf24;line-height:1;
+  filter:drop-shadow(0 0 7px rgba(251,191,36,0.5));
+}
+.feat-title{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--text);}
+.feat-sub{font-size:8px;letter-spacing:0.3px;color:var(--muted);line-height:1.5;}
 
-  /* ── Hint ── */
-  .hint {
-    font-size: 9px;
-    color: transparent;
-    letter-spacing: 1px;
-    text-align: center;
-    line-height: 1.8;
-    margin-bottom: 32px;
-    min-height: 32px;
-    transition: color 0.5s;
-  }
-  .hint.show { color: #475569; }
+/* ── FOOTER ── */
+footer{
+  position:relative;z-index:1;
+  padding:18px 24px;text-align:center;
+  border-top:1px solid rgba(255,255,255,0.04);
+}
+.footer-txt{font-size:8px;letter-spacing:2px;color:#1e3a4a;}
 
-  /* ── Divider ── */
-  .divider {
-    width: 100%;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 14px;
-  }
-  .div-line { flex:1; height:1px; background:rgba(255,255,255,0.06); }
-  .div-txt  { font-size:8px; letter-spacing:2px; color:#1e3a4a; white-space:nowrap; }
-
-  /* ── Store badges ── */
-  .store-links { display:flex; gap:10px; width:100%; }
-
-  .store-link {
-    flex: 1;
-    padding: 13px 16px;
-    border-radius: 14px;
-    text-decoration: none;
-    display: flex;
-    align-items: center;
-    gap: 11px;
-    transition: transform 0.15s, filter 0.15s;
-  }
-  .store-link:active { transform: scale(0.96); }
-
-  /* Apple */
-  .store-apple {
-    background: #1a1a1a;
-    border: 1px solid #333;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.6);
-  }
-  .store-apple .s-icon svg { fill: #fff; }
-  .store-apple .s-label  { color: #fff; }
-  .store-apple .s-sub    { color: #888; }
-
-  /* Google */
-  .store-google {
-    background: #1c2333;
-    border: 1px solid rgba(66,133,244,0.3);
-    box-shadow: 0 4px 20px rgba(66,133,244,0.12);
-  }
-  .store-google .s-label { color: #e8f0fe; }
-  .store-google .s-sub   { color: #5f7a9f; }
-
-  /* Shared icon + text layout */
-  .s-icon { flex-shrink:0; display:flex; align-items:center; }
-  .s-text { display:flex; flex-direction:column; gap:1px; }
-  .s-sub  {
-    font-family: 'Space Mono', monospace;
-    font-size: 7px;
-    letter-spacing: 1px;
-    line-height: 1;
-  }
-  .s-label {
-    font-family: 'Rajdhani', sans-serif;
-    font-size: 17px;
-    font-weight: 700;
-    letter-spacing: 0.5px;
-    line-height: 1.1;
-  }
+/* Play mode: hide features */
+body.mode-play .features{display:none;}
+body.mode-play .hero-store .store-label{display:block;}
 </style>
 </head>
 <body>
-<div class="card">
 
-  <!-- Logo -->
-  <div class="logo-area">
-    <div class="arena">
-      <div class="wall"></div>
-      <div class="arena-ball"></div>
-      <div class="wall"></div>
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <div class="nav-arena">
+      <div class="nav-wall"></div>
+      <div class="nav-ball"></div>
+      <div class="nav-wall"></div>
     </div>
-    <div class="brand">
-      <div class="brand-name"><span class="b1">BALL</span><span class="b2">TEMPO</span></div>
-      <div class="brand-sub">ONE TAP TIMING</div>
-    </div>
+    <div class="nav-brand">BALL<span>TEMPO</span></div>
+  </div>
+  <div class="nav-badge">ONE TAP TIMING</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+
+  <div class="skull-wrap">
+    <svg class="skull-svg" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="9" cy="8.5" rx="7.5" ry="7.5" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
+      <rect x="3" y="14" width="12" height="5.5" rx="2" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
+      <ellipse cx="5.8" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
+      <ellipse cx="12.2" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
+      <ellipse cx="9" cy="12" rx="1.1" ry="1.3" fill="rgba(30,0,0,0.55)"/>
+      <rect x="4.5" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
+      <rect x="8.3" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
+      <rect x="12.1" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
+    </svg>
   </div>
 
-  <div class="level-name" id="levelName" style="display:none"></div>
-  <div class="level-sub"  id="levelSub" style="display:none"></div>
+  <h1 class="game-title" id="mainTitle">BALLTEMPO</h1>
+  <div class="level-name-hero" id="levelName"></div>
 
-  <!-- CTA -->
-  <a class="btn-open" id="openBtn" href="#">
+  <p class="tagline" id="tagline">ONE TAP TIMING</p>
+  <p class="desc" id="desc">50 levels. 30 mechanics.<br>Can you reach Legend rank?</p>
+
+  <a class="btn-primary" id="openBtn" href="https://apps.apple.com/tr/app/balltempo-one-tap-timing/id6775275537">
     <div class="play-icon">
-      <svg viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg viewBox="0 0 11 12" fill="none">
         <path d="M1 1L10 6L1 11V1Z" fill="white" stroke="white" stroke-width="0.5" stroke-linejoin="round"/>
       </svg>
     </div>
-    <span id="btnLabel">GET THE APP</span>
+    <span id="btnLabel">DOWNLOAD FREE</span>
   </a>
+
   <div class="hint" id="hintMsg"></div>
 
-  <!-- Store -->
-  <div class="divider">
-    <div class="div-line"></div>
-    <div class="div-txt">DON'T HAVE THE APP?</div>
-    <div class="div-line"></div>
+  <div class="hero-store">
+    <div class="store-label" style="display:none;">DON'T HAVE THE APP?</div>
+    <div class="store-links">
+      <a class="store-link store-apple" href="https://apps.apple.com/tr/app/balltempo-one-tap-timing/id6775275537">
+        <div class="s-icon">
+          <svg width="20" height="24" viewBox="0 0 814 1000" class="s-apple-icon">
+            <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-47.4-148.2-108.8c-49.5-71.4-91.7-181.1-91.7-285.5 0-181 118.1-277 233.9-277 63.6 0 116.2 42.8 155.8 42.8 37.8 0 96.7-44.3 165.6-44.3 26.6 0 108.2 2.6 162.3 100.3zm-219.1-172.3c30.7-36.4 52.5-87.9 52.5-139.3 0-7.1-.6-14.3-1.9-20.1-49.9 1.9-109 33.5-145 70.5-28.8 32.3-55.2 83.9-55.2 136.3 0 7.8 1.3 15.7 1.9 18.3 3.2.6 8.4 1.3 13.6 1.3 44.9 0 101.5-29.4 134.1-66.9z"/>
+          </svg>
+        </div>
+        <div class="s-text">
+          <div class="s-sub">DOWNLOAD ON THE</div>
+          <div class="s-label">App Store</div>
+        </div>
+      </a>
+      <a class="store-link store-google" href="https://play.google.com/store/apps/details?id=com.meghassoft.balltempo">
+        <div class="s-icon">
+          <svg width="20" height="22" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M4.5 6.4L26 24 4.5 41.6A2 2 0 014 40V8a2 2 0 01.5-1.6z"/>
+            <path fill="#FBBC05" d="M4.5 41.6L26 24l6.5 8.4-22.8 13.1a2 2 0 01-5.2-3.9z"/>
+            <path fill="#34A853" d="M40.5 20.2L34 24l6.5 3.8 3.5-2a2 2 0 000-3.6z"/>
+            <path fill="#4285F4" d="M4.5 6.4l22.8 13L26 24 4.5 6.4z"/>
+          </svg>
+        </div>
+        <div class="s-text">
+          <div class="s-sub">GET IT ON</div>
+          <div class="s-label">Google Play</div>
+        </div>
+      </a>
+    </div>
   </div>
 
-  <div class="store-links">
-    <!-- App Store -->
-    <a class="store-link store-apple" href="https://apps.apple.com/tr/app/balltempo-one-tap-timing/id6775275537">
-      <div class="s-icon">
-        <svg width="22" height="26" viewBox="0 0 814 1000">
-          <path d="M788.1 340.9c-5.8 4.5-108.2 62.2-108.2 190.5 0 148.4 130.3 200.9 134.2 202.2-.6 3.2-20.7 71.9-68.7 141.9-42.8 61.6-87.5 123.1-155.5 123.1s-85.5-39.5-164-39.5c-76 0-103.7 40.8-165.9 40.8s-105-47.4-148.2-108.8c-49.5-71.4-91.7-181.1-91.7-285.5 0-181 118.1-277 233.9-277 63.6 0 116.2 42.8 155.8 42.8 37.8 0 96.7-44.3 165.6-44.3 26.6 0 108.2 2.6 162.3 100.3zm-219.1-172.3c30.7-36.4 52.5-87.9 52.5-139.3 0-7.1-.6-14.3-1.9-20.1-49.9 1.9-109 33.5-145 70.5-28.8 32.3-55.2 83.9-55.2 136.3 0 7.8 1.3 15.7 1.9 18.3 3.2.6 8.4 1.3 13.6 1.3 44.9 0 101.5-29.4 134.1-66.9z"/>
-        </svg>
-      </div>
-      <div class="s-text">
-        <div class="s-sub">DOWNLOAD ON THE</div>
-        <div class="s-label">App Store</div>
-      </div>
-    </a>
+</section>
 
-    <!-- Google Play -->
-    <a class="store-link store-google" href="https://play.google.com/store/apps/details?id=com.meghassoft.balltempo">
-      <div class="s-icon">
-        <svg width="22" height="24" viewBox="0 0 48 48">
-          <path fill="#EA4335" d="M4.5 6.4L26 24 4.5 41.6A2 2 0 014 40V8a2 2 0 01.5-1.6z"/>
-          <path fill="#FBBC05" d="M4.5 41.6L26 24l6.5 8.4-22.8 13.1a2 2 0 01-5.2-3.9z"/>
-          <path fill="#34A853" d="M40.5 20.2L34 24l6.5 3.8 3.5-2a2 2 0 000-3.6z"/>
-          <path fill="#4285F4" d="M4.5 6.4l22.8 13L26 24 4.5 6.4z"/>
+<!-- FEATURES (landing mode only) -->
+<section class="features">
+  <div class="feat-label">WHY BALLTEMPO?</div>
+  <div class="feat-grid">
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <div class="feat-ball-arena">
+          <div class="feat-wall"></div>
+          <div class="feat-ball"></div>
+          <div class="feat-wall"></div>
+        </div>
+      </div>
+      <div class="feat-title">50 LEVELS</div>
+      <div class="feat-sub">From breezy<br>to brutal</div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <svg class="feat-skull-svg" viewBox="0 0 18 20">
+          <ellipse cx="9" cy="8.5" rx="7.5" ry="7.5" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
+          <rect x="3" y="14" width="12" height="5.5" rx="2" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
+          <ellipse cx="5.8" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
+          <ellipse cx="12.2" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
+          <ellipse cx="9" cy="12" rx="1.1" ry="1.3" fill="rgba(30,0,0,0.55)"/>
+          <rect x="4.5" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
+          <rect x="8.3" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
+          <rect x="12.1" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
         </svg>
       </div>
-      <div class="s-text">
-        <div class="s-sub">GET IT ON</div>
-        <div class="s-label">Google Play</div>
+      <div class="feat-title">30 MECHANICS</div>
+      <div class="feat-sub">Every level<br>surprises you</div>
+    </div>
+
+    <div class="feat-card">
+      <div class="feat-icon">
+        <span class="feat-star">★</span>
       </div>
-    </a>
+      <div class="feat-title">RANK UP</div>
+      <div class="feat-sub">Rookie<br>to Legend</div>
+    </div>
+
   </div>
+</section>
 
-</div>
+<footer>
+  <p class="footer-txt">© MEGHASSOFT · BALLTEMPO · ONE TAP TIMING</p>
+</footer>
 
 <script>
-(function() {
-  // ?c=code is the primary format — query strings survive WhatsApp mobile (hash gets stripped)
-  // Fall back to #code for old shared links
-  var code = new URLSearchParams(location.search).get('c') || location.hash.slice(1);
-  if (!code) return;
+(function(){
+  // Detect platform for landing mode CTA
+  var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
+  var isAndroid=/android/i.test(navigator.userAgent);
+  var btn=document.getElementById('openBtn');
+  if(isAndroid){
+    btn.href='https://play.google.com/store/apps/details?id=com.meghassoft.balltempo';
+  }
 
-  // Decode level name for display (URL-safe base64 → standard base64)
-  var name = 'CUSTOM LEVEL';
-  try {
-    var b64 = code.replace(/-/g, '+').replace(/_/g, '/');
-    while (b64.length % 4) b64 += '=';
-    var d = JSON.parse(decodeURIComponent(escape(atob(b64))));
-    name = (d.mechName || d.name || 'CUSTOM LEVEL').toUpperCase();
-  } catch(e) {}
+  // Deep link mode
+  var code=new URLSearchParams(location.search).get('c')||location.hash.slice(1);
+  if(!code) return;
 
-  var ln = document.getElementById('levelName');
-  var ls = document.getElementById('levelSub');
-  ln.textContent = name;
-  ln.style.display = '';
-  ls.textContent = 'TAP TO PLAY THIS LEVEL';
-  ls.style.display = '';
+  // Decode level name
+  var name='CUSTOM LEVEL';
+  try{
+    var b64=code.replace(/-/g,'+').replace(/_/g,'/');
+    while(b64.length%4) b64+='=';
+    var d=JSON.parse(decodeURIComponent(escape(atob(b64))));
+    name=(d.mechName||d.name||'CUSTOM LEVEL').toUpperCase();
+  }catch(e){}
 
-  // Deep link — pass code as-is (already URL-safe base64, no extra encoding needed)
-  var deepLink = 'balltempo://play?c=' + code;
-  var btn = document.getElementById('openBtn');
-  btn.href = deepLink;
-  document.getElementById('btnLabel').textContent = 'OPEN IN BALLTEMPO';
+  // Switch to play mode
+  document.body.classList.add('mode-play');
+  document.getElementById('mainTitle').style.display='none';
+  var ln=document.getElementById('levelName');
+  ln.textContent=name;
+  ln.style.display='block';
+  document.getElementById('tagline').textContent='CHALLENGE ACCEPTED?';
+  document.getElementById('desc').textContent='Tap to open this level in BallTempo.';
+  document.getElementById('btnLabel').textContent='OPEN IN BALLTEMPO';
+  document.querySelector('.store-label').style.display='block';
 
-  setTimeout(function() {
-    window.location.href = deepLink;
-    setTimeout(function() {
-      var h = document.getElementById('hintMsg');
-      h.textContent = 'App not opening? Install BallTempo first, then tap the link again.';
+  var deepLink='balltempo://play?c='+code;
+  btn.href=deepLink;
+
+  setTimeout(function(){
+    window.location.href=deepLink;
+    setTimeout(function(){
+      var h=document.getElementById('hintMsg');
+      h.textContent='App not opening? Download BallTempo first from the store below.';
       h.classList.add('show');
-    }, 2500);
-  }, 600);
+    },2500);
+  },600);
 })();
 </script>
 </body>
