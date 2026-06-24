@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>BallTempo — One Tap Timing</title>
-<meta name="description" content="Master 50 levels of precision timing. One tap. Can you reach Legend rank?">
-<meta property="og:title" content="BallTempo — One Tap Timing">
-<meta property="og:description" content="50 levels. 30 mechanics. Can you reach Legend?">
+<meta name="description" content="One wrong tap. Back to start. 80+ levels of pure precision — can you survive them all?">
+<meta property="og:title" content="BallTempo — Can You Beat Me?">
+<meta property="og:description" content="80+ levels. 50+ mechanics. One wrong tap. Back to start.">
 <meta name="theme-color" content="#0d1117">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
@@ -17,124 +17,133 @@
   --text:#e2e8f0;--muted:#64748b;--border:rgba(56,189,248,0.12);
 }
 html{scroll-behavior:smooth;}
-body{
-  min-height:100dvh;background:var(--bg);color:var(--text);
-  font-family:'Space Mono',monospace;overflow-x:hidden;
-}
+body{min-height:100dvh;background:var(--bg);color:var(--text);font-family:'Space Mono',monospace;overflow-x:hidden;}
 
-/* Grid background */
+/* Grid */
 body::before{
   content:'';position:fixed;inset:0;z-index:0;
   background-image:
-    linear-gradient(rgba(56,189,248,0.025) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(56,189,248,0.025) 1px,transparent 1px);
+    linear-gradient(rgba(56,189,248,0.022) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(56,189,248,0.022) 1px,transparent 1px);
   background-size:44px 44px;pointer-events:none;
+}
+
+/* Floating particles */
+@keyframes rise{
+  0%{transform:translateY(0) translateX(0);opacity:0;}
+  12%{opacity:var(--op,.45);}
+  88%{opacity:var(--op,.2);}
+  100%{transform:translateY(-110vh) translateX(var(--sx,20px));opacity:0;}
+}
+.par{
+  position:fixed;bottom:-4px;border-radius:50%;pointer-events:none;z-index:0;
+  animation:rise var(--dur,10s) var(--del,0s) ease-in infinite;
 }
 
 /* ── NAV ── */
 nav{
   position:relative;z-index:10;
-  padding:18px 24px;
+  padding:16px 22px;
   display:flex;align-items:center;justify-content:space-between;
 }
 .nav-logo{display:flex;align-items:center;gap:12px;}
 .nav-arena{
-  width:46px;height:32px;position:relative;
+  width:44px;height:30px;position:relative;
   display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
 }
 .nav-wall{
-  width:2.5px;height:26px;border-radius:2px;
+  width:2.5px;height:24px;border-radius:2px;
   background:linear-gradient(to bottom,transparent,var(--cyan) 25%,var(--cyan) 75%,transparent);
   box-shadow:0 0 7px rgba(56,189,248,0.7);
 }
 .nav-ball{
-  width:16px;height:16px;border-radius:50%;
+  width:15px;height:15px;border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#bae6fd,var(--cyan) 40%,#0369a1 72%,#071929 100%);
-  box-shadow:0 0 10px rgba(56,189,248,0.8),inset 0 1px 0 rgba(255,255,255,0.4);
+  box-shadow:0 0 10px rgba(56,189,248,0.9),inset 0 1px 0 rgba(255,255,255,0.4);
   position:absolute;left:50%;top:50%;
   animation:navBall 1.6s ease-in-out infinite;
 }
 @keyframes navBall{
-  0%,100%{transform:translate(calc(-50% - 8px),-50%)}
-  50%{transform:translate(calc(-50% + 8px),-50%)}
+  0%,100%{transform:translate(calc(-50% - 7px),-50%)}
+  50%{transform:translate(calc(-50% + 7px),-50%)}
 }
-.nav-brand{
-  font-family:'Rajdhani',sans-serif;
-  font-size:20px;font-weight:700;letter-spacing:2px;color:var(--text);
-}
+.nav-brand{font-family:'Rajdhani',sans-serif;font-size:20px;font-weight:700;letter-spacing:2px;color:var(--text);}
 .nav-brand span{color:var(--cyan);}
-.nav-badge{
-  font-size:8px;letter-spacing:2px;color:var(--muted);
-  border:1px solid var(--border);border-radius:6px;padding:4px 8px;
-}
+.nav-badge{font-size:8px;letter-spacing:2px;color:var(--muted);border:1px solid var(--border);border-radius:6px;padding:4px 8px;}
 
 /* ── HERO ── */
 .hero{
   position:relative;z-index:1;
-  min-height:calc(100dvh - 68px);
+  min-height:calc(100dvh - 62px);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:20px 28px 48px;text-align:center;
+  padding:16px 28px 52px;text-align:center;
 }
-
-/* Radial glow */
+/* Dual glow: cyan top, red bottom */
 .hero::before{
-  content:'';
-  position:absolute;top:-15%;left:50%;transform:translateX(-50%);
-  width:min(700px,130vw);height:70%;
-  background:radial-gradient(ellipse,rgba(56,189,248,0.12) 0%,transparent 65%);
+  content:'';position:absolute;top:-10%;left:50%;transform:translateX(-50%);
+  width:min(720px,130vw);height:65%;
+  background:radial-gradient(ellipse,rgba(56,189,248,0.13) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+.hero::after{
+  content:'';position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  width:min(600px,120vw);height:40%;
+  background:radial-gradient(ellipse at bottom,rgba(248,113,113,0.07) 0%,transparent 70%);
   pointer-events:none;z-index:0;
 }
 
 /* Skull */
-.skull-wrap{position:relative;z-index:1;margin-bottom:28px;}
-.skull-svg{
-  width:clamp(140px,38vw,200px);height:auto;display:block;margin:0 auto;
-  filter:drop-shadow(0 0 18px rgba(56,189,248,0.6)) drop-shadow(0 0 40px rgba(56,189,248,0.2));
-  animation:skullPulse 3s ease-in-out infinite;
+.skull-wrap{
+  position:relative;z-index:1;margin-bottom:24px;
+  animation:skullFloat 3.6s ease-in-out infinite;
 }
-@keyframes skullPulse{
-  0%,100%{filter:drop-shadow(0 0 18px rgba(56,189,248,0.55)) drop-shadow(0 0 40px rgba(56,189,248,0.2));}
-  50%{filter:drop-shadow(0 0 28px rgba(56,189,248,0.75)) drop-shadow(0 0 60px rgba(56,189,248,0.3)) drop-shadow(0 0 80px rgba(248,113,113,0.12));}
+@keyframes skullFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+.skull-svg{
+  width:clamp(148px,40vw,200px);height:auto;display:block;margin:0 auto;
+  filter:drop-shadow(0 0 18px rgba(56,189,248,0.6)) drop-shadow(0 0 40px rgba(56,189,248,0.22)) drop-shadow(0 4px 20px rgba(248,113,113,0.12));
+  animation:skullGlow 4s ease-in-out infinite;
+}
+@keyframes skullGlow{
+  0%,100%{filter:drop-shadow(0 0 18px rgba(56,189,248,0.6)) drop-shadow(0 0 40px rgba(56,189,248,0.22)) drop-shadow(0 4px 20px rgba(248,113,113,0.12));}
+  50%{filter:drop-shadow(0 0 28px rgba(56,189,248,0.8)) drop-shadow(0 0 64px rgba(56,189,248,0.3)) drop-shadow(0 0 80px rgba(248,113,113,0.18));}
 }
 
 /* Title */
 .game-title{
   position:relative;z-index:1;
   font-family:'Rajdhani',sans-serif;
-  font-size:clamp(48px,13vw,80px);
-  font-weight:700;letter-spacing:4px;line-height:1;
+  font-size:clamp(50px,13vw,82px);font-weight:700;letter-spacing:4px;line-height:1;
   background:linear-gradient(135deg,#f1f5f9 0%,var(--cyan) 48%,var(--purple) 100%);
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:6px;
+  margin-bottom:4px;
 }
 .level-name-hero{
   position:relative;z-index:1;
-  font-size:clamp(22px,7vw,40px);font-weight:700;letter-spacing:3px;
-  color:var(--text);text-shadow:0 0 28px rgba(56,189,248,0.3);
-  margin-bottom:6px;display:none;
+  font-size:clamp(22px,7vw,42px);font-weight:700;letter-spacing:3px;
+  color:var(--text);text-shadow:0 0 28px rgba(56,189,248,0.35);
+  margin-bottom:4px;display:none;
 }
 .tagline{
   position:relative;z-index:1;
-  font-size:10px;letter-spacing:6px;color:var(--cyan);
-  margin-bottom:14px;
+  font-size:10px;letter-spacing:5px;color:var(--cyan);
+  margin-bottom:12px;
 }
 .desc{
   position:relative;z-index:1;
-  font-size:13px;line-height:1.8;color:var(--muted);
-  max-width:280px;margin-bottom:36px;
+  font-size:13px;line-height:1.85;color:var(--muted);
+  max-width:288px;margin-bottom:32px;
 }
+.desc strong{color:var(--text);font-weight:700;}
 
-/* Primary CTA */
+/* CTA */
 .btn-primary{
   position:relative;z-index:1;
   display:flex;align-items:center;justify-content:center;gap:12px;
-  width:100%;max-width:320px;
-  padding:18px 28px;border-radius:16px;
+  width:100%;max-width:320px;padding:18px 28px;border-radius:16px;
   background:linear-gradient(135deg,var(--cyan),#0ea5e9 55%,#0284c7);
-  color:#fff;font-family:'Space Mono',monospace;
-  font-size:12px;font-weight:700;letter-spacing:3px;
+  color:#fff;font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:3px;
   text-decoration:none;
-  box-shadow:0 8px 28px rgba(56,189,248,0.4),0 2px 8px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.2);
+  box-shadow:0 8px 28px rgba(56,189,248,0.42),0 2px 8px rgba(0,0,0,0.5),inset 0 1px 0 rgba(255,255,255,0.2);
   overflow:hidden;transition:transform 0.15s,box-shadow 0.15s;
   margin-bottom:14px;
 }
@@ -154,14 +163,14 @@ nav{
 .hint{
   position:relative;z-index:1;
   font-size:9px;color:transparent;letter-spacing:1px;
-  text-align:center;line-height:1.8;margin-bottom:20px;min-height:28px;
+  text-align:center;line-height:1.8;margin-bottom:18px;min-height:26px;
   transition:color 0.5s;max-width:300px;
 }
 .hint.show{color:var(--muted);}
 
-/* Store badges in hero */
+/* Store in hero */
 .hero-store{position:relative;z-index:1;width:100%;max-width:320px;}
-.store-label{font-size:8px;letter-spacing:2px;color:#2d4a5a;margin-bottom:10px;text-align:center;}
+.store-label-sm{font-size:8px;letter-spacing:2px;color:#2d4a5a;margin-bottom:9px;text-align:center;display:none;}
 .store-links{display:flex;gap:10px;}
 .store-link{
   flex:1;padding:12px 14px;border-radius:14px;
@@ -169,7 +178,7 @@ nav{
   transition:transform 0.15s;
 }
 .store-link:active{transform:scale(0.96);}
-.store-apple{background:#1a1a1a;border:1px solid #2a2a2a;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
+.store-apple{background:#1a1a1a;border:1px solid #282828;box-shadow:0 4px 20px rgba(0,0,0,0.6);}
 .store-google{background:#1c2333;border:1px solid rgba(66,133,244,0.25);box-shadow:0 4px 16px rgba(66,133,244,0.1);}
 .s-icon{flex-shrink:0;display:flex;align-items:center;}
 .s-apple-icon{fill:#fff;}
@@ -179,35 +188,25 @@ nav{
 .store-apple .s-label{color:#fff;}.store-apple .s-sub{color:#666;}
 .store-google .s-label{color:#e8f0fe;}.store-google .s-sub{color:#5f7a9f;}
 
-/* ── FEATURES (landing mode only) ── */
+/* ── FEATURES ── */
 .features{
   position:relative;z-index:1;
-  padding:40px 24px;
+  padding:36px 22px;
   border-top:1px solid rgba(255,255,255,0.05);
 }
-.feat-label{
-  text-align:center;font-size:8px;letter-spacing:4px;
-  color:var(--muted);margin-bottom:24px;
-}
-.feat-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
-  max-width:480px;margin:0 auto;
-}
+.feat-label{text-align:center;font-size:8px;letter-spacing:4px;color:var(--muted);margin-bottom:22px;}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:480px;margin:0 auto;}
 .feat-card{
   background:linear-gradient(135deg,rgba(255,255,255,0.04),rgba(255,255,255,0.01));
   border:1px solid var(--border);border-radius:14px;
   padding:18px 10px;text-align:center;
   display:flex;flex-direction:column;align-items:center;gap:10px;
+  transition:border-color 0.3s;
 }
+.feat-card:hover{border-color:rgba(56,189,248,0.3);}
 .feat-icon{display:flex;align-items:center;justify-content:center;height:40px;}
-.feat-ball-arena{
-  width:42px;height:28px;position:relative;
-  display:flex;align-items:center;justify-content:space-between;
-}
-.feat-wall{
-  width:2px;height:22px;border-radius:1px;
-  background:linear-gradient(to bottom,transparent,var(--cyan) 25%,var(--cyan) 75%,transparent);
-}
+.feat-ball-arena{width:40px;height:26px;position:relative;display:flex;align-items:center;justify-content:space-between;}
+.feat-wall{width:2px;height:20px;border-radius:1px;background:linear-gradient(to bottom,transparent,var(--cyan) 25%,var(--cyan) 75%,transparent);}
 .feat-ball{
   width:12px;height:12px;border-radius:50%;
   background:radial-gradient(circle at 35% 30%,#bae6fd,var(--cyan) 45%,#0369a1 100%);
@@ -219,31 +218,34 @@ nav{
   0%,100%{transform:translate(calc(-50% - 6px),-50%)}
   50%{transform:translate(calc(-50% + 6px),-50%)}
 }
-.feat-skull-svg{
-  width:32px;height:auto;
-  filter:drop-shadow(0 0 5px rgba(248,113,113,0.45));
-}
-.feat-star{
-  font-size:26px;color:#fbbf24;line-height:1;
-  filter:drop-shadow(0 0 7px rgba(251,191,36,0.5));
-}
+.feat-skull-svg{width:30px;height:auto;filter:drop-shadow(0 0 5px rgba(248,113,113,0.5));}
+.feat-star{font-size:24px;color:#fbbf24;filter:drop-shadow(0 0 7px rgba(251,191,36,0.55));}
+.feat-num{font-family:'Rajdhani',sans-serif;font-size:28px;font-weight:700;line-height:1;}
 .feat-title{font-size:9px;font-weight:700;letter-spacing:2px;color:var(--text);}
 .feat-sub{font-size:8px;letter-spacing:0.3px;color:var(--muted);line-height:1.5;}
 
 /* ── FOOTER ── */
-footer{
-  position:relative;z-index:1;
-  padding:18px 24px;text-align:center;
-  border-top:1px solid rgba(255,255,255,0.04);
-}
+footer{position:relative;z-index:1;padding:16px 22px;text-align:center;border-top:1px solid rgba(255,255,255,0.04);}
 .footer-txt{font-size:8px;letter-spacing:2px;color:#1e3a4a;}
 
-/* Play mode: hide features */
+/* Play mode */
 body.mode-play .features{display:none;}
-body.mode-play .hero-store .store-label{display:block;}
+body.mode-play .store-label-sm{display:block;}
 </style>
 </head>
 <body>
+
+<!-- Particles -->
+<div aria-hidden="true">
+  <div class="par" style="left:6%;width:2px;height:2px;background:#38bdf8;--dur:9s;--del:0s;--sx:18px;--op:.5;"></div>
+  <div class="par" style="left:18%;width:3px;height:3px;background:#a78bfa;--dur:11.5s;--del:1.8s;--sx:-22px;--op:.4;"></div>
+  <div class="par" style="left:32%;width:2px;height:2px;background:#38bdf8;--dur:8.5s;--del:3.2s;--sx:12px;--op:.45;"></div>
+  <div class="par" style="left:50%;width:2px;height:2px;background:#f87171;--dur:12s;--del:0.7s;--sx:-18px;--op:.3;"></div>
+  <div class="par" style="left:65%;width:3px;height:3px;background:#38bdf8;--dur:9.5s;--del:2.4s;--sx:24px;--op:.5;"></div>
+  <div class="par" style="left:80%;width:2px;height:2px;background:#a78bfa;--dur:10.5s;--del:4.1s;--sx:-12px;--op:.4;"></div>
+  <div class="par" style="left:44%;width:2px;height:2px;background:#38bdf8;--dur:13s;--del:6.5s;--sx:20px;--op:.3;"></div>
+  <div class="par" style="left:92%;width:2px;height:2px;background:#f87171;--dur:8s;--del:3.8s;--sx:-20px;--op:.35;"></div>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -263,22 +265,34 @@ body.mode-play .hero-store .store-label{display:block;}
 
   <div class="skull-wrap">
     <svg class="skull-svg" viewBox="0 0 18 20" xmlns="http://www.w3.org/2000/svg">
-      <ellipse cx="9" cy="8.5" rx="7.5" ry="7.5" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
-      <rect x="3" y="14" width="12" height="5.5" rx="2" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
-      <ellipse cx="5.8" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
-      <ellipse cx="12.2" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
-      <ellipse cx="9" cy="12" rx="1.1" ry="1.3" fill="rgba(30,0,0,0.55)"/>
-      <rect x="4.5" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
-      <rect x="8.3" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
-      <rect x="12.1" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
+      <!-- Head -->
+      <ellipse cx="9" cy="8.5" rx="7.5" ry="7.5" fill="#f8fafc" stroke="#f87171" stroke-width="0.65"/>
+      <!-- Jaw -->
+      <rect x="3" y="14" width="12" height="5.5" rx="2" fill="#f8fafc" stroke="#f87171" stroke-width="0.65"/>
+      <!-- Diamond eyes -->
+      <path d="M5.8 6 L7.8 8.3 L5.8 10.6 L3.8 8.3 Z" fill="#1e293b"/>
+      <path d="M12.2 6 L14.2 8.3 L12.2 10.6 L10.2 8.3 Z" fill="#1e293b"/>
+      <!-- Eye red glints -->
+      <circle cx="6.5" cy="7.1" r="0.65" fill="rgba(248,113,113,0.55)"/>
+      <circle cx="12.9" cy="7.1" r="0.65" fill="rgba(248,113,113,0.55)"/>
+      <!-- Nose -->
+      <ellipse cx="9" cy="12.2" rx="1.1" ry="1.3" fill="rgba(30,0,0,0.5)"/>
+      <!-- Crack -->
+      <path d="M9 2.5 L10.2 5 L8.8 6.5" stroke="rgba(248,113,113,0.45)" stroke-width="0.38" fill="none" stroke-linecap="round"/>
+      <!-- 5 teeth -->
+      <rect x="3.5" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+      <rect x="5.95" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+      <rect x="8.4" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+      <rect x="10.85" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+      <rect x="13.3" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
     </svg>
   </div>
 
   <h1 class="game-title" id="mainTitle">BALLTEMPO</h1>
   <div class="level-name-hero" id="levelName"></div>
 
-  <p class="tagline" id="tagline">ONE TAP TIMING</p>
-  <p class="desc" id="desc">50 levels. 30 mechanics.<br>Can you reach Legend rank?</p>
+  <p class="tagline" id="tagline">ONE WRONG TAP. BACK TO START.</p>
+  <p class="desc" id="desc"><strong>80+ levels.</strong> 50+ mechanics.<br>From Rookie to Legend — if you survive.</p>
 
   <a class="btn-primary" id="openBtn" href="https://apps.apple.com/tr/app/balltempo-one-tap-timing/id6775275537">
     <div class="play-icon">
@@ -292,7 +306,7 @@ body.mode-play .hero-store .store-label{display:block;}
   <div class="hint" id="hintMsg"></div>
 
   <div class="hero-store">
-    <div class="store-label" style="display:none;">DON'T HAVE THE APP?</div>
+    <div class="store-label-sm">DON'T HAVE THE APP?</div>
     <div class="store-links">
       <a class="store-link store-apple" href="https://apps.apple.com/tr/app/balltempo-one-tap-timing/id6775275537">
         <div class="s-icon">
@@ -324,7 +338,7 @@ body.mode-play .hero-store .store-label{display:block;}
 
 </section>
 
-<!-- FEATURES (landing mode only) -->
+<!-- FEATURES -->
 <section class="features">
   <div class="feat-label">WHY BALLTEMPO?</div>
   <div class="feat-grid">
@@ -337,7 +351,7 @@ body.mode-play .hero-store .store-label{display:block;}
           <div class="feat-wall"></div>
         </div>
       </div>
-      <div class="feat-title">50 LEVELS</div>
+      <div class="feat-title">80+ LEVELS</div>
       <div class="feat-sub">From breezy<br>to brutal</div>
     </div>
 
@@ -346,15 +360,19 @@ body.mode-play .hero-store .store-label{display:block;}
         <svg class="feat-skull-svg" viewBox="0 0 18 20">
           <ellipse cx="9" cy="8.5" rx="7.5" ry="7.5" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
           <rect x="3" y="14" width="12" height="5.5" rx="2" fill="#f8fafc" stroke="#f87171" stroke-width="0.7"/>
-          <ellipse cx="5.8" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
-          <ellipse cx="12.2" cy="8.5" rx="2.3" ry="2.6" fill="rgba(30,0,0,0.55)"/>
-          <ellipse cx="9" cy="12" rx="1.1" ry="1.3" fill="rgba(30,0,0,0.55)"/>
-          <rect x="4.5" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
-          <rect x="8.3" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
-          <rect x="12.1" y="14" width="1.4" height="3.2" rx="0.5" fill="rgba(30,0,0,0.4)"/>
+          <path d="M5.8 6 L7.8 8.3 L5.8 10.6 L3.8 8.3 Z" fill="#1e293b"/>
+          <path d="M12.2 6 L14.2 8.3 L12.2 10.6 L10.2 8.3 Z" fill="#1e293b"/>
+          <circle cx="6.5" cy="7.1" r="0.6" fill="rgba(248,113,113,0.5)"/>
+          <circle cx="12.9" cy="7.1" r="0.6" fill="rgba(248,113,113,0.5)"/>
+          <ellipse cx="9" cy="12.2" rx="1.1" ry="1.3" fill="rgba(30,0,0,0.5)"/>
+          <rect x="3.5" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+          <rect x="5.95" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+          <rect x="8.4" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+          <rect x="10.85" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
+          <rect x="13.3" y="14" width="1.2" height="3.5" rx="0.4" fill="rgba(30,0,0,0.4)"/>
         </svg>
       </div>
-      <div class="feat-title">30 MECHANICS</div>
+      <div class="feat-title">50+ MECHANICS</div>
       <div class="feat-sub">Every level<br>surprises you</div>
     </div>
 
@@ -362,8 +380,8 @@ body.mode-play .hero-store .store-label{display:block;}
       <div class="feat-icon">
         <span class="feat-star">★</span>
       </div>
-      <div class="feat-title">RANK UP</div>
-      <div class="feat-sub">Rookie<br>to Legend</div>
+      <div class="feat-title">6 RANKS</div>
+      <div class="feat-sub">Rookie<br>→ Legend</div>
     </div>
 
   </div>
@@ -375,49 +393,48 @@ body.mode-play .hero-store .store-label{display:block;}
 
 <script>
 (function(){
-  // Detect platform for landing mode CTA
-  var isIOS=/iphone|ipad|ipod/i.test(navigator.userAgent);
   var isAndroid=/android/i.test(navigator.userAgent);
   var btn=document.getElementById('openBtn');
-  if(isAndroid){
-    btn.href='https://play.google.com/store/apps/details?id=com.meghassoft.balltempo';
-  }
+  if(isAndroid) btn.href='https://play.google.com/store/apps/details?id=com.meghassoft.balltempo';
 
-  // Deep link mode
   var code=new URLSearchParams(location.search).get('c')||location.hash.slice(1);
-  if(!code) return;
 
-  // Decode level name
-  var name='CUSTOM LEVEL';
-  try{
-    var b64=code.replace(/-/g,'+').replace(/_/g,'/');
-    while(b64.length%4) b64+='=';
-    var d=JSON.parse(decodeURIComponent(escape(atob(b64))));
-    name=(d.mechName||d.name||'CUSTOM LEVEL').toUpperCase();
-  }catch(e){}
+  if(code){
+    // Deep link mode
+    var name='CUSTOM LEVEL';
+    try{
+      var b64=code.replace(/-/g,'+').replace(/_/g,'/');
+      while(b64.length%4) b64+='=';
+      var d=JSON.parse(decodeURIComponent(escape(atob(b64))));
+      name=(d.mechName||d.name||'CUSTOM LEVEL').toUpperCase();
+    }catch(e){}
 
-  // Switch to play mode
-  document.body.classList.add('mode-play');
-  document.getElementById('mainTitle').style.display='none';
-  var ln=document.getElementById('levelName');
-  ln.textContent=name;
-  ln.style.display='block';
-  document.getElementById('tagline').textContent='CHALLENGE ACCEPTED?';
-  document.getElementById('desc').textContent='Tap to open this level in BallTempo.';
-  document.getElementById('btnLabel').textContent='OPEN IN BALLTEMPO';
-  document.querySelector('.store-label').style.display='block';
+    document.body.classList.add('mode-play');
+    document.getElementById('mainTitle').style.display='none';
+    var ln=document.getElementById('levelName');
+    ln.textContent=name; ln.style.display='block';
+    document.getElementById('tagline').textContent='CHALLENGE ACCEPTED?';
+    document.getElementById('desc').textContent='Tap to open this level in BallTempo.';
+    document.getElementById('btnLabel').textContent='OPEN IN BALLTEMPO';
 
-  var deepLink='balltempo://play?c='+code;
-  btn.href=deepLink;
+    var deepLink='balltempo://play?c='+code;
+    btn.href=deepLink;
 
-  setTimeout(function(){
-    window.location.href=deepLink;
     setTimeout(function(){
-      var h=document.getElementById('hintMsg');
-      h.textContent='App not opening? Download BallTempo first from the store below.';
-      h.classList.add('show');
-    },2500);
-  },600);
+      window.location.href=deepLink;
+      setTimeout(function(){
+        var h=document.getElementById('hintMsg');
+        h.textContent='App not opening? Download BallTempo first from the stores below.';
+        h.classList.add('show');
+      },2500);
+    },600);
+
+  } else {
+    // Landing mode — try to open app if installed
+    setTimeout(function(){
+      window.location.href='balltempo://';
+    },500);
+  }
 })();
 </script>
 </body>
