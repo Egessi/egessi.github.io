@@ -413,10 +413,42 @@ body.mode-play .store-label-sm{display:block;}
   var btn=document.getElementById('openBtn');
   if(isAndroid) btn.href='https://play.google.com/store/apps/details?id=com.meghassoft.balltempo';
 
-  var code=new URLSearchParams(location.search).get('c')||location.hash.slice(1);
+  var params=new URLSearchParams(location.search);
+  var code=params.get('c')||location.hash.slice(1);
+  var ghost=params.get('g');
+  var lv=params.get('lv');
 
-  if(code){
-    // Deep link mode
+  function showHint(){
+    var h=document.getElementById('hintMsg');
+    h.textContent='App not opening? Download BallTempo first from the stores below.';
+    h.classList.add('show');
+  }
+
+  if(ghost&&lv!==null){
+    // Ghost race challenge deep link
+    var qs='g='+ghost+'&lv='+lv+'&s='+(params.get('s')||'0');
+    if(params.get('h')) qs+='&h='+params.get('h');
+    if(params.get('n')) qs+='&n='+params.get('n');
+    var ghostLink='balltempo://?'+qs;
+    var senderName=params.get('n')?decodeURIComponent(params.get('n')):'Someone';
+    var lvLabel=lv==='0'?'Daily Challenge':'Level '+lv;
+
+    document.body.classList.add('mode-play');
+    document.getElementById('mainTitle').style.display='none';
+    var ln=document.getElementById('levelName');
+    ln.textContent='GHOST RACE'; ln.style.display='block';
+    document.getElementById('tagline').textContent=senderName.toUpperCase()+' CHALLENGES YOU!';
+    document.getElementById('desc').textContent='Race '+senderName+'\'s ghost on '+lvLabel+'. Can you beat their score?';
+    document.getElementById('btnLabel').textContent='ACCEPT CHALLENGE';
+    btn.href=ghostLink;
+
+    setTimeout(function(){
+      window.location.href=ghostLink;
+      setTimeout(showHint,2500);
+    },600);
+
+  } else if(code){
+    // Custom level deep link
     var name='CUSTOM LEVEL';
     try{
       var b64=code.replace(/-/g,'+').replace(/_/g,'/');
@@ -427,8 +459,8 @@ body.mode-play .store-label-sm{display:block;}
 
     document.body.classList.add('mode-play');
     document.getElementById('mainTitle').style.display='none';
-    var ln=document.getElementById('levelName');
-    ln.textContent=name; ln.style.display='block';
+    var ln2=document.getElementById('levelName');
+    ln2.textContent=name; ln2.style.display='block';
     document.getElementById('tagline').textContent='CHALLENGE ACCEPTED?';
     document.getElementById('desc').textContent='Tap to open this level in BallTempo.';
     document.getElementById('btnLabel').textContent='OPEN IN BALLTEMPO';
@@ -438,11 +470,7 @@ body.mode-play .store-label-sm{display:block;}
 
     setTimeout(function(){
       window.location.href=deepLink;
-      setTimeout(function(){
-        var h=document.getElementById('hintMsg');
-        h.textContent='App not opening? Download BallTempo first from the stores below.';
-        h.classList.add('show');
-      },2500);
+      setTimeout(showHint,2500);
     },600);
 
   } else {
