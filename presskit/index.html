@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Ball Tempo Press Kit</title>
+<meta name="description" content="Press kit for Ball Tempo: One Tap Timing, a one-tap reflex game with 81 levels, 80+ mechanics and a mechanic editor. Fact sheet, screenshots, GIFs, logo and contact.">
+<meta property="og:title" content="Ball Tempo: One Tap Timing, press kit">
+<meta property="og:description" content="One tap. Perfect timing. 81 levels, 80+ mechanics and an editor where players design their own.">
+<meta property="og:image" content="https://egessi.github.io/presskit/img/feature-en.png">
+<meta name="theme-color" content="#12163a">
+<link rel="icon" href="img/icon-1024.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#0B0E2E;--navy-1:#2E345E;--navy-2:#171A38;
+  --gold-1:#FFD35A;--gold-2:#E48A0E;--purple-1:#A070FF;--purple-2:#5B2FD6;--cyan:#5FBBFF;
+  --text:#eef1ff;--muted:rgba(238,241,255,.62);
+}
+html{scroll-behavior:smooth;}
+body{background:linear-gradient(180deg,#12163a 0%,#1c2456 40%,#171a3d 100%);background-attachment:fixed;color:var(--text);
+  font-family:'Fredoka',sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+a{color:var(--gold-1);}
+.wrap{max-width:1040px;margin:0 auto;padding:0 18px;}
+.mono{font-family:'Space Mono',monospace;}
+
+header{padding:28px 0 8px;}
+.top{display:flex;align-items:center;gap:18px;flex-wrap:wrap;}
+.top img{width:96px;height:96px;border-radius:22px;border:3px solid var(--ink);box-shadow:0 5px 0 rgba(0,0,0,.4);}
+.top h1{font-size:clamp(26px,5vw,40px);line-height:1.1;font-weight:700;}
+.top h1 span{color:var(--gold-1);}
+.kicker{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:2.5px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+.tagline{font-size:18px;color:var(--muted);margin-top:4px;}
+.langbar{margin-left:auto;display:flex;gap:8px;}
+.langbar a{font-family:'Space Mono',monospace;font-size:12px;font-weight:700;letter-spacing:1.5px;text-decoration:none;color:#fff;
+  background:var(--navy-2);border:2px solid var(--ink);border-radius:10px;padding:7px 12px;box-shadow:0 3px 0 rgba(0,0,0,.35);}
+
+.btns{display:flex;flex-wrap:wrap;gap:10px;margin:22px 0 6px;}
+.btn{display:inline-flex;align-items:center;gap:8px;text-decoration:none;font-weight:700;font-size:15px;letter-spacing:.3px;
+  border:3px solid var(--ink);border-radius:14px;padding:11px 18px;box-shadow:0 4px 0 rgba(0,0,0,.4);color:#3A1C00;
+  background:linear-gradient(180deg,var(--gold-1),var(--gold-2));}
+.btn.alt{color:#fff;background:linear-gradient(180deg,var(--purple-1),var(--purple-2));}
+.btn.dark{color:#fff;background:linear-gradient(180deg,#3A4172,#232850);}
+
+section{margin:34px 0;}
+h2{font-size:24px;font-weight:700;margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+h2::before{content:'';width:10px;height:22px;border-radius:4px;background:var(--gold-1);border:2px solid var(--ink);}
+.card{background:linear-gradient(180deg,#2E345E,#1F2347);border:3px solid var(--ink);border-radius:20px;box-shadow:0 5px 0 rgba(0,0,0,.35);padding:20px;}
+.grid2{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:18px;}
+@media (max-width:760px){.grid2{grid-template-columns:1fr;}.langbar{margin-left:0;}}
+dl.facts{display:grid;grid-template-columns:auto 1fr;gap:9px 14px;font-size:15px;}
+dl.facts dt{font-family:'Space Mono',monospace;font-size:11px;letter-spacing:1.6px;color:var(--muted);text-transform:uppercase;padding-top:3px;}
+dl.facts dd{word-break:break-word;}
+p + p{margin-top:12px;}
+ul.feat{list-style:none;display:grid;gap:9px;}
+ul.feat li{padding-left:26px;position:relative;}
+ul.feat li::before{content:'';position:absolute;left:0;top:7px;width:13px;height:13px;border-radius:50%;
+  background:radial-gradient(circle at 35% 30%,#eaf6ff,#38bdf8 45%,#0369a1 100%);border:2px solid var(--ink);}
+
+.clips{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:14px;}
+.clip{background:#0f1230;border:3px solid var(--ink);border-radius:16px;overflow:hidden;box-shadow:0 4px 0 rgba(0,0,0,.35);}
+.clip video{display:block;width:100%;aspect-ratio:540/1174;object-fit:cover;background:#0b0e2e;}
+.clip .cap{padding:8px 10px 10px;font-size:13px;}
+.clip .cap b{display:block;font-size:14px;}
+.clip .cap a{font-family:'Space Mono',monospace;font-size:11px;margin-right:10px;}
+
+.shots{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;}
+@media (min-width:900px){.shots{grid-template-columns:repeat(8,minmax(0,1fr));gap:10px;}}
+.shots a{display:block;border:3px solid var(--ink);border-radius:14px;overflow:hidden;box-shadow:0 4px 0 rgba(0,0,0,.35);}
+.shots img{display:block;width:100%;height:auto;}
+.assets{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:14px;align-items:start;}
+.assets .card{padding:14px;}
+.assets img{display:block;width:100%;border-radius:12px;border:2px solid var(--ink);}
+.assets .card p{font-size:13px;color:var(--muted);margin-top:8px;}
+
+.tr{border-top:3px dashed rgba(255,255,255,.12);padding-top:18px;}
+footer{padding:30px 0 50px;color:var(--muted);font-size:13px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div class="top">
+    <img src="img/icon-1024.png" alt="Ball Tempo app icon" width="96" height="96">
+    <div>
+      <div class="kicker">Press kit</div>
+      <h1>Ball Tempo: <span>One Tap Timing</span></h1>
+      <div class="tagline">One tap. Perfect timing. Every level changes the rule.</div>
+    </div>
+    <div class="langbar"><a href="#en">EN</a><a href="#tr">TR</a></div>
+  </div>
+  <div class="btns">
+    <a class="btn" href="balltempo-presskit.zip" download>Download press kit (ZIP)</a>
+    <a class="btn alt" href="https://apps.apple.com/app/id6775275537">App Store</a>
+    <a class="btn alt" href="https://play.google.com/store/apps/details?id=com.meghassoft.balltempo">Google Play</a>
+    <a class="btn dark" href="mailto:egemenkarakahya@gmail.com?subject=Ball%20Tempo%20press">Contact</a>
+  </div>
+</header>
+
+<section id="en" class="grid2">
+  <div class="card">
+    <h2>Fact sheet</h2>
+    <dl class="facts">
+      <dt>Developer</dt><dd>Egemen Karakahya, independent developer based in Turkey</dd>
+      <dt>Release</dt><dd>iOS: June 20, 2026<br>Android: on Google Play</dd>
+      <dt>Platforms</dt><dd>iPhone and iPad (iOS 15 or later), Android</dd>
+      <dt>Price</dt><dd>Free, with optional in-app purchases</dd>
+      <dt>Genre</dt><dd>Arcade, reflex, rhythm</dd>
+      <dt>Languages</dt><dd>English, Turkish. Store page in 37 languages.</dd>
+      <dt>Website</dt><dd><a href="https://meghassoft.com/app/balltempo/">meghassoft.com/app/balltempo</a></dd>
+      <dt>Press</dt><dd><a href="mailto:egemenkarakahya@gmail.com">egemenkarakahya@gmail.com</a></dd>
+    </dl>
+  </div>
+  <div class="card">
+    <h2>About the game</h2>
+    <p>Ball Tempo is a one-tap timing game where every level changes the rule. A ball flies between two walls: tap when it is close to the wall, and you score. Tap too early and you are out.</p>
+    <p>Then the rules start to move. The ball splits in two, flips direction at random, drifts, rewinds, swings on a pendulum or gets pulled by a magnet. Gravity turns upside down. Then the screen goes dark and you play by rhythm alone. There are 81 handcrafted levels built on more than 80 mechanics, and each one asks the same thumb to learn something new.</p>
+    <p>Players can also build their own. The mechanic editor lets anyone design a rule set, test it and publish it for everyone to play, and a monthly design contest rewards the best one with an exclusive crown ball.</p>
+  </div>
+</section>
+
+<section class="card">
+  <h2>Features</h2>
+  <ul class="feat">
+    <li>One tap, 81 handcrafted levels, more than 80 distinct mechanics</li>
+    <li>Mechanic editor: design your own rules, test them, publish them to the community</li>
+    <li>Monthly design contest with a new theme and exclusive crown rewards</li>
+    <li>Ghost Race: race a friend's recorded run on the same level, in real time</li>
+    <li>Daily challenge, endless mode and a seasonal Skull Pass</li>
+    <li>Seasonal events in the game, such as Halloween and New Year</li>
+    <li>89 collectible balls plus themed arenas and zone skins</li>
+    <li>A soundtrack generated in the game that picks up as your combo grows</li>
+  </ul>
+</section>
+
+<section>
+  <h2>Gameplay clips</h2>
+  <div class="clips">
+    <div class="clip"><video src="media/gameplay-two-walls.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="cap"><b>Two Walls</b><a href="media/gameplay-two-walls.gif" download>GIF</a><a href="media/gameplay-two-walls.mp4" download>MP4</a></div></div>
+    <div class="clip"><video src="media/gameplay-chaos.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="cap"><b>Chaos</b><a href="media/gameplay-chaos.gif" download>GIF</a><a href="media/gameplay-chaos.mp4" download>MP4</a></div></div>
+    <div class="clip"><video src="media/gameplay-drift.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="cap"><b>Drift</b><a href="media/gameplay-drift.gif" download>GIF</a><a href="media/gameplay-drift.mp4" download>MP4</a></div></div>
+    <div class="clip"><video src="media/gameplay-switch.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="cap"><b>Switch</b><a href="media/gameplay-switch.gif" download>GIF</a><a href="media/gameplay-switch.mp4" download>MP4</a></div></div>
+    <div class="clip"><video src="media/ghost-race.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="cap"><b>Ghost Race</b><a href="media/ghost-race.gif" download>GIF</a><a href="media/ghost-race.mp4" download>MP4</a></div></div>
+    <div class="clip"><video src="media/mechanic-editor.mp4" autoplay muted loop playsinline preload="metadata"></video>
+      <div class="cap"><b>Mechanic editor</b><a href="media/mechanic-editor.gif" download>GIF</a><a href="media/mechanic-editor.mp4" download>MP4</a></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>Screenshots</h2>
+  <div class="shots">
+    <a href="img/en/01.jpg"><img src="img/en/01-s.jpg" alt="One tap, perfect timing" loading="lazy"></a>
+    <a href="img/en/02.jpg"><img src="img/en/02-s.jpg" alt="Mechanics made by players" loading="lazy"></a>
+    <a href="img/en/03.jpg"><img src="img/en/03-s.jpg" alt="Every level a new world" loading="lazy"></a>
+    <a href="img/en/04.jpg"><img src="img/en/04-s.jpg" alt="Collectible skins" loading="lazy"></a>
+    <a href="img/en/05.jpg"><img src="img/en/05-s.jpg" alt="Ghost Race" loading="lazy"></a>
+    <a href="img/en/06.jpg"><img src="img/en/06-s.jpg" alt="Handcrafted levels" loading="lazy"></a>
+    <a href="img/en/07.jpg"><img src="img/en/07-s.jpg" alt="Seasonal events" loading="lazy"></a>
+    <a href="img/en/08.jpg"><img src="img/en/08-s.jpg" alt="Monthly design contest" loading="lazy"></a>
+  </div>
+</section>
+
+<section>
+  <h2>Logo and art</h2>
+  <div class="assets">
+    <div class="card"><img src="img/icon-1024.png" alt="App icon"><p><a href="img/icon-1024.png" download>App icon, 1024 x 1024 PNG</a></p></div>
+    <div class="card"><img src="img/feature-en.png" alt="Header art, English"><p><a href="img/feature-en.png" download>Header art, 1024 x 500 PNG</a></p></div>
+    <div class="card"><img src="img/feature-tr.png" alt="Header art, Turkish"><p><a href="img/feature-tr.png" download>Header art, Turkish, 1024 x 500 PNG</a></p></div>
+  </div>
+</section>
+
+<section class="card">
+  <h2>About the developer</h2>
+  <p>Ball Tempo is designed and developed by Egemen Karakahya, an independent developer based in Turkey. Game design, code, level design and the in-game soundtrack generator are his work, and the game keeps getting new mechanics, cosmetics and events.</p>
+  <p>Promo codes for reviewers and interview requests: <a href="mailto:egemenkarakahya@gmail.com?subject=Ball%20Tempo%20press">egemenkarakahya@gmail.com</a>. Screenshots, clips and art on this page may be used freely for coverage of the game.</p>
+</section>
+
+<section id="tr" class="tr">
+  <h2>Türkçe basın bülteni</h2>
+  <div class="grid2">
+    <div class="card">
+      <dl class="facts">
+        <dt>Geliştirici</dt><dd>Egemen Karakahya, Türkiye'den bağımsız geliştirici</dd>
+        <dt>Çıkış</dt><dd>iOS: 20 Haziran 2026<br>Android: Google Play'de</dd>
+        <dt>Platform</dt><dd>iPhone ve iPad (iOS 15 ve üstü), Android</dd>
+        <dt>Fiyat</dt><dd>Ücretsiz, isteğe bağlı uygulama içi satın alma</dd>
+        <dt>Dil</dt><dd>Türkçe, İngilizce. Mağaza sayfası 37 dilde.</dd>
+        <dt>İletişim</dt><dd><a href="mailto:egemenkarakahya@gmail.com">egemenkarakahya@gmail.com</a></dd>
+      </dl>
+    </div>
+    <div class="card">
+      <p><b>Ball Tempo: One Tap Timing</b>, her bölümde kuralı değiştiren tek dokunuşluk bir zamanlama oyunu. Top iki duvar arasında gidip gelir; duvara yaklaştığında dokunursan puan alırsın, erken dokunursan oyun biter.</p>
+      <p>Sonra kurallar değişmeye başlar: top ikiye bölünür, rastgele yön değiştirir, geri sarar, sarkaç gibi sallanır ya da mıknatısa kapılır. Yerçekimi ters döner. Sonunda ekran kararır ve sadece ritimle oynarsın. 81 elle tasarlanmış bölüm, 80'den fazla farklı mekanik üzerine kurulu.</p>
+      <p>Oyuncular kendi mekaniklerini de tasarlayabiliyor: oyun içindeki editörle kural yazıp test ediyor ve herkesin oynaması için yayınlıyorlar. Her ay düzenlenen tasarım yarışmasının kazananı özel bir taç top kazanıyor. Oyunu Türkiye'den bağımsız geliştirici Egemen Karakahya tek başına geliştiriyor.</p>
+    </div>
+  </div>
+  <div class="shots" style="margin-top:16px">
+    <a href="img/tr/01.jpg"><img src="img/tr/01-s.jpg" alt="Ekran görüntüsü 1" loading="lazy"></a>
+    <a href="img/tr/02.jpg"><img src="img/tr/02-s.jpg" alt="Ekran görüntüsü 2" loading="lazy"></a>
+    <a href="img/tr/03.jpg"><img src="img/tr/03-s.jpg" alt="Ekran görüntüsü 3" loading="lazy"></a>
+    <a href="img/tr/04.jpg"><img src="img/tr/04-s.jpg" alt="Ekran görüntüsü 4" loading="lazy"></a>
+    <a href="img/tr/05.jpg"><img src="img/tr/05-s.jpg" alt="Ekran görüntüsü 5" loading="lazy"></a>
+    <a href="img/tr/06.jpg"><img src="img/tr/06-s.jpg" alt="Ekran görüntüsü 6" loading="lazy"></a>
+    <a href="img/tr/07.jpg"><img src="img/tr/07-s.jpg" alt="Ekran görüntüsü 7" loading="lazy"></a>
+    <a href="img/tr/08.jpg"><img src="img/tr/08-s.jpg" alt="Ekran görüntüsü 8" loading="lazy"></a>
+  </div>
+</section>
+
+<footer>© Meghassoft · Ball Tempo · <a href="../">egessi.github.io</a></footer>
+</div>
+</body>
+</html>
